@@ -18,8 +18,8 @@ public class Game {
 
 	public static void main(String[] args) {
 		// Replace these players with your players to test.
-		Player player0 = new AggressivePlayer("Lefty");
-		Player player1 = new RandomPlayer("Righty");
+		Player player0 = new HumanPlayer("Player");
+		Player player1 = new RandomPlayer("Bot");
 		Game g = new Game(player0, player1, true, true);
 		g.play();
 	}
@@ -34,6 +34,19 @@ public class Game {
 	private boolean p0Start;
 	private boolean verbose = true;
 	private boolean logMe;
+	private int lastMove = 0;
+
+	/**
+	 * Creates a new game between two players.
+	 * 
+	 * @param p0
+	 *            A player who is participating in the game.
+	 * @param p1
+	 *            A player who is participating in the game.
+	 */
+	public Game(Player p0, Player p1) {
+		this(p0, p1, true, true);
+	}
 
 	/**
 	 * Creates a new game between two players.
@@ -69,18 +82,6 @@ public class Game {
 			p0Start = false;
 	}
 
-	/**
-	 * Creates a new game between two players.
-	 * 
-	 * @param p0
-	 *            A player who is participating in the game.
-	 * @param p1
-	 *            A player who is participating in the game.
-	 */
-	public Game(Player p0, Player p1) {
-		this(p0, p1, true, true);
-	}
-
 	private void attack(int attacker) {
 		score[attacker] += 1;
 		log(attacker);
@@ -99,6 +100,10 @@ public class Game {
 		if (p == p0)
 			return h0.toArray();
 		return h1.toArray();
+	}
+
+	public int getLastMove() {
+		return lastMove;
 	}
 
 	/**
@@ -243,6 +248,7 @@ public class Game {
 		} catch (Exception e) {
 		}
 		if (isLegalP0Move(m)) {
+			lastMove = m;
 			h0.remove(Math.abs(m));
 			deck.deal(h0);
 			playerLoc[0] += m;
@@ -276,6 +282,7 @@ public class Game {
 		} catch (Exception e) {
 		}
 		if (isLegalP1Move(m)) {
+			lastMove = m;
 			h1.remove(Math.abs(m));
 			deck.deal(h1);
 			playerLoc[1] += m;
@@ -399,6 +406,7 @@ public class Game {
 		p0Turn = p0Start;
 		p0.start();
 		p1.start();
+		lastMove = 0;
 		log();
 	}
 

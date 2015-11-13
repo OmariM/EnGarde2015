@@ -21,10 +21,6 @@ public abstract class Player {
 	public Player(String name) {
 		this.name = name;
 	}
-	
-	public String getName() {
-		return name;
-	}
 
 	/**
 	 * 
@@ -40,10 +36,23 @@ public abstract class Player {
 	}
 
 	/**
+	 * @return the move that your opponent executed last turn. If there was no
+	 *         last move (because this is the first move of the round) returns
+	 *         0.
+	 */
+	protected final int getLastMove() {
+		return game.getLastMove();
+	}
+
+	/**
 	 * @return my location on the board (an integer between 0 and 22 inclusive)
 	 */
 	protected final int getLocation() {
 		return game.getLoc(this);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -61,6 +70,22 @@ public abstract class Player {
 	 */
 	protected final int getOpponentScore() {
 		return game.getOtherScore(this);
+	}
+
+	/**
+	 * Returns all possible legal moves. That is, all integer values that are
+	 * represented in my hand and their negatives excluding the values that
+	 * would cause me to pass my opponent or drop off either side of the board.
+	 * 
+	 * @return A list of integers representing all of my possible legal moves.
+	 */
+	public final int[] getPossibleMoves() {
+		List<Integer> possibilities = getPossibleMovesList();
+		int[] out = new int[possibilities.size()];
+		for (int i = 0; i < out.length; i++) {
+			out[i] = possibilities.get(i);
+		}
+		return out;
 	}
 
 	public final List<Integer> getPossibleMovesList() {
@@ -82,22 +107,6 @@ public abstract class Player {
 		}
 		Collections.sort(possibilities);
 		return possibilities;
-	}
-
-	/**
-	 * Returns all possible legal moves. That is, all integer values that are
-	 * represented in my hand and their negatives excluding the values that
-	 * would cause me to pass my opponent or drop off either side of the board.
-	 * 
-	 * @return A list of integers representing all of my possible legal moves.
-	 */
-	public final int[] getPossibleMoves() {
-		List<Integer> possibilities = getPossibleMovesList();
-		int[] out = new int[possibilities.size()];
-		for (int i = 0; i < out.length; i++) {
-			out[i] = possibilities.get(i);
-		}
-		return out;
 	}
 
 	/**
@@ -128,16 +137,6 @@ public abstract class Player {
 	public abstract int move();
 
 	/**
-	 * This function is called automatically at the start of each ROUND. That
-	 * is, at the start of the game and every time the players reset positions,
-	 * after they have drawn their starting hands for the round. It does nothing
-	 * by default.
-	 */
-	public void start() {
-
-	}
-
-	/**
 	 * Links the player with the game in which it is participating. DO NOT CALL
 	 * THIS METHOD. IF YOU CALL THIS METHOD, YOU WILL LOSE.
 	 * 
@@ -146,6 +145,16 @@ public abstract class Player {
 	 */
 	public final void setGame(Game game) {
 		this.game = game;
+	}
+
+	/**
+	 * This function is called automatically at the start of each ROUND. That
+	 * is, at the start of the game and every time the players reset positions,
+	 * after they have drawn their starting hands for the round. It does nothing
+	 * by default.
+	 */
+	public void start() {
+
 	}
 
 }

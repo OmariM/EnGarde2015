@@ -24,7 +24,8 @@ public class Tournament {
 		Tournament t = new Tournament();
 		t.addPlayer(new AggressivePlayer("AggroBot"));
 		t.addPlayer(new RandomPlayer("RandomBot"));
-		t.playTournament(1000, false);
+		t.addPlayer(new CowardlyPlayer("CowardBot"));
+		t.playTournament(10000, false);
 	}
 
 	private LinkedList<Player> players = new LinkedList<Player>();
