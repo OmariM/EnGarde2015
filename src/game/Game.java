@@ -18,7 +18,7 @@ public class Game {
 
 	public static void main(String[] args) {
 		// Replace these players with your players to test.
-		Player player0 = new HumanPlayer("Player");
+		Player player0 = new blank_space("Your ex");
 		Player player1 = new RandomPlayer("Bot");
 		Game g = new Game(player0, player1, true, true);
 		g.play();

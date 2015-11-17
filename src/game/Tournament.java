@@ -22,9 +22,10 @@ public class Tournament {
 
 	public static void main(String[] args) {
 		Tournament t = new Tournament();
+		t.addPlayer(new blank_space("Long (Array) List of ex-lovers"));
 		t.addPlayer(new AggressivePlayer("AggroBot"));
-		t.addPlayer(new RandomPlayer("RandomBot"));
-		t.addPlayer(new CowardlyPlayer("CowardBot"));
+		//t.addPlayer(new RandomPlayer("RandomBot"));
+		//t.addPlayer(new CowardlyPlayer("CowardBot"));
 		t.playTournament(10000, false);
 	}
 
