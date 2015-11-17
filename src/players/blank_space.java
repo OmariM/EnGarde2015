@@ -19,6 +19,10 @@ public class blank_space extends Player {
 		super(name);
 		this.balls=balls;
 	}
+	
+	public double getBalls(){
+		return this.balls;
+	}
 
 	/**
 	 * Adds opponent move to the themMoves list
@@ -360,8 +364,8 @@ public class blank_space extends Player {
 					}
 				}
 				
-				System.out.println(getPossibleMoves()[getPossibleMoves().length - 2] + " 13");
-				return getPossibleMoves()[getPossibleMoves().length - 2];
+				System.out.println(getPossibleMoves()[getPossibleMoves().length] + " 13");
+				return getPossibleMoves()[getPossibleMoves().length];
 			} else if (space <= 12) {
 				// CARD CEWNTING
 				for (int i = 0; i < getPossibleMoves().length; i++) {
