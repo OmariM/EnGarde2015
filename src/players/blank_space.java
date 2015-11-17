@@ -15,8 +15,13 @@ public class blank_space extends Player {
 	private double balls=.05;
 	private int[] hand = { 0, 0, 0, 0, 0 };
 
-	public blank_space(String name) {
+	public blank_space(String name, double balls) {
 		super(name);
+		this.balls=balls;
+	}
+	
+	public double getBalls(){
+		return this.balls;
 	}
 
 	/**
@@ -67,21 +72,7 @@ public class blank_space extends Player {
 		}
 		double n = getTurnsRemaining();
 		double r = next(x);
-		double check = (((5.0 + n - r) / (5.0 + n)) * ((4.0 + n - r) / (4.0 + n)) * ((3.0 + n - r) / (3.0 + n)) * ((2.0 + n - r) / (2.0 + n)) * ((1.0 + n - r) / (1.0 + n)));
-		/*if (proper() == 1) {
-				if (1.0 - (((5.0 + n - r) / (5.0 + n))
-						* ((4.0 + n - r) / (4.0 + n))
-						* ((3.0 + n - r) / (3.0 + n))
-						* ((2.0 + n - r) / (2.0 + n)) * ((1.0 + n - r) / (1.0 + n))) > check) {*/
-		/*
-		 * else{ for (int i = 0; i < hand.length; i++) { if (1.0 - (((5.0 + n -
-		 * r) / (5.0 + n)) * ((4.0 + n - r) / (4.0 + n))* ((3.0 + n - r) / (3.0
-		 * + n)) * ((2.0 + n - r) / (2.0 + n)) * ((1.0 + n - r) / (1.0 + n))) >
-		 * check) { check = (1.0-((5.0 + n - r) / (5.0 + n)) * ((4.0 + n - r) /
-		 * (4.0 + n))* ((3.0 + n - r) / (3.0 + n)) * ((2.0 + n - r) / (2.0 + n))
-		 * * ((1.0 + n - r) / (1.0 + n))); } } }
-		 */
-		return check;
+		return (((5.0 + n - r) / (5.0 + n)) * ((4.0 + n - r) / (4.0 + n)) * ((3.0 + n - r) / (3.0 + n)) * ((2.0 + n - r) / (2.0 + n)) * ((1.0 + n - r) / (1.0 + n)));
 	}
 
 	/**
@@ -308,15 +299,18 @@ public class blank_space extends Player {
 					if (getPossibleMoves()[i] == space) {
 						System.out.println(getPossibleMoves()[i] + " 1");
 						return getPossibleMoves()[i];
-					}else if(getPossibleMoves()[i]==space-1 && win(1) < balls){
-						System.out.println(getPossibleMoves()[i] + " 2");
-						return getPossibleMoves()[i];
 					}
 				}
-				for (int i = 0; i < getPossibleMoves().length; i++) {
-					if (space + Math.abs(getPossibleMoves()[i]) >=5 ){
-						System.out.println(getPossibleMoves()[i] + " 3");
-						return getPossibleMoves()[i];
+				for (int i = 0; i < getHand().length; i++) {
+					if (space + getHand()[i] >5 && contains(getPossibleMoves(),getHand()[i])){
+						System.out.println(-getHand()[i] + " 3");
+						return -getHand()[i];
+					}
+				}
+				for (int i = 0; i < getHand().length; i++) {
+					if (win(space + getHand()[i])<balls){
+						System.out.println(getHand()[i] + " 3.5");
+						return -getHand()[i];
 					}
 				}
 					System.out.println(getPossibleMoves()[0] + " 4");
@@ -357,16 +351,21 @@ public class blank_space extends Player {
 						return getPossibleMoves()[i];
 					}
 				}
-				for (int i = 0; i < getPossibleMoves().length; i++) {// if u can
-					// hit
-					// them
-					if (win(space - getPossibleMoves()[i]) < balls &&space - getPossibleMoves()[i]<=5){
-						System.out.println(getPossibleMoves()[i] + " 12");
-						return getPossibleMoves()[i];
+				for (int i = 0; i < getHand().length; i++) {
+					if (space + getHand()[i] > 5 && contains(getPossibleMoves(),getHand()[i])){
+						System.out.println(getHand()[i] + " 12");
+						return getHand()[i];
 					}
 				}
-					System.out.println(getPossibleMoves()[getPossibleMoves().length - 2] + " 13");
-					return getPossibleMoves()[getPossibleMoves().length - 2];
+				for (int i = 0; i < getHand().length; i++) {
+					if (win(space + getHand()[i])<balls){
+						System.out.println(getHand()[i] + " 12.5");
+						return getHand()[i];
+					}
+				}
+				
+				System.out.println(getPossibleMoves()[getPossibleMoves().length] + " 13");
+				return getPossibleMoves()[getPossibleMoves().length];
 			} else if (space <= 12) {
 				// CARD CEWNTING
 				for (int i = 0; i < getPossibleMoves().length; i++) {
