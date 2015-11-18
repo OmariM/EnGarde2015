@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-public class blank_space extends Player {
+public class BlankSpace extends Player {
 	// ArrayList<ArrayList<Integer>> cardDb=new ArrayList<ArrayList<Integer>>();
 	private int[][] cardDb = new int[5][5];
 	ArrayList<Integer> themMoves = new ArrayList<Integer>();
@@ -15,7 +15,7 @@ public class blank_space extends Player {
 	private double balls=.05;
 	private int[] hand = { 0, 0, 0, 0, 0 };
 
-	public blank_space(String name, double balls) {
+	public BlankSpace(String name, double balls) {
 		super(name);
 		this.balls=balls;
 	}
@@ -266,10 +266,10 @@ public class blank_space extends Player {
 	 */
 	public int agressive(boolean direction) {
 		if (direction) {
-			System.out.println(highestMove(getPossibleMoves()) + "-1");
+			//System.out.println(highestMove(getPossibleMoves()) + "-1");
 			return highestMove(getPossibleMoves());
 		} else {
-			System.out.println(highestNeg(getPossibleMoves()) + "0");
+			//System.out.println(highestNeg(getPossibleMoves()) + "0");
 			return highestNeg(getPossibleMoves());
 		}
 	}
@@ -297,49 +297,49 @@ public class blank_space extends Player {
 																		// hit
 																		// them
 					if (getPossibleMoves()[i] == space) {
-						System.out.println(getPossibleMoves()[i] + " 1");
+						//System.out.println(getPossibleMoves()[i] + " 1");
 						return getPossibleMoves()[i];
 					}
 				}
 				for (int i = 0; i < getHand().length; i++) {
 					if (space + getHand()[i] >5 && contains(getPossibleMoves(),getHand()[i])){
-						System.out.println(-getHand()[i] + " 3");
+						//System.out.println(-getHand()[i] + " 3");
 						return -getHand()[i];
 					}
 				}
 				for (int i = 0; i < getHand().length; i++) {
 					if (win(space + getHand()[i])<balls){
-						System.out.println(getHand()[i] + " 3.5");
+						//System.out.println(getHand()[i] + " 3.5");
 						return -getHand()[i];
 					}
 				}
-					System.out.println(getPossibleMoves()[0] + " 4");
+					//System.out.println(getPossibleMoves()[0] + " 4");
 					//System.out.println(win(space - getPossibleMoves()[0]));
 					return getPossibleMoves()[0];
 			} else if (space <= 12) {
 				// CARD CEWNTING
 				for (int i = 0; i < getPossibleMoves().length; i++) {
 					if (win(space - getPossibleMoves()[i]) < .05) {
-						System.out.println(Math.abs(getPossibleMoves()[i]) + " 5");
+						//System.out.println(Math.abs(getPossibleMoves()[i]) + " 5");
 						return getPossibleMoves()[i];
 					}
 				}
 				if (space - highestMove(getPossibleMoves()) > 5) {
-					System.out.println(highestMove(getPossibleMoves()) + " 6");
+					//System.out.println(highestMove(getPossibleMoves()) + " 6");
 					return highestMove(getPossibleMoves());
 				} else if (space > Math.abs(lowestMove(getPossibleMoves())) + 5) {
-					System.out.println(lowestMove(getPossibleMoves()) + " 7");
+					//System.out.println(lowestMove(getPossibleMoves()) + " 7");
 					return lowestMove(getPossibleMoves());
 				} else if (win(space - lowestNeg(getPossibleMoves())) < balls) {
-					System.out.println(lowestNeg(getPossibleMoves()) + " 8");
+					//System.out.println(lowestNeg(getPossibleMoves()) + " 8");
 					return lowestNeg(getPossibleMoves());
 				} else {
 					// //////////////////////////////////////////////////
-					System.out.println(getPossibleMoves()[1] + " 9");
+					//System.out.println(getPossibleMoves()[1] + " 9");
 					return getPossibleMoves()[1];
 				}
 			} else {
-				System.out.println(highestMove(getPossibleMoves()) + " 10");
+				//System.out.println(highestMove(getPossibleMoves()) + " 10");
 				return highestMove(getPossibleMoves());
 			}
 			// /////////////////////////////////////////////////////////////////////
@@ -347,47 +347,47 @@ public class blank_space extends Player {
 			if (space <= 5) {
 				for (int i = 0; i < getPossibleMoves().length; i++) {// if u can
 					if (getPossibleMoves()[i] == -space) {
-						System.out.println(getPossibleMoves()[i] + " 11");
+						//System.out.println(getPossibleMoves()[i] + " 11");
 						return getPossibleMoves()[i];
 					}
 				}
 				for (int i = 0; i < getHand().length; i++) {
 					if (space + getHand()[i] > 5 && contains(getPossibleMoves(),getHand()[i])){
-						System.out.println(getHand()[i] + " 12");
+						//System.out.println(getHand()[i] + " 12");
 						return getHand()[i];
 					}
 				}
 				for (int i = 0; i < getHand().length; i++) {
 					if (win(space + getHand()[i])<balls){
-						System.out.println(getHand()[i] + " 12.5");
+						//System.out.println(getHand()[i] + " 12.5");
 						return getHand()[i];
 					}
 				}
 				
-				System.out.println(getPossibleMoves()[getPossibleMoves().length] + " 13");
+				//System.out.println(getPossibleMoves()[getPossibleMoves().length] + " 13");
 				return getPossibleMoves()[getPossibleMoves().length];
 			} else if (space <= 12) {
 				// CARD CEWNTING
 				for (int i = 0; i < getPossibleMoves().length; i++) {
 					if (space - Math.abs(getPossibleMoves()[i]) <= 5) {
 						if (win(space - Math.abs(getPossibleMoves()[i])) < balls) {
-							System.out.println(getPossibleMoves()[i] + " 14");
+							//System.out.println(getPossibleMoves()[i] + " 14");
 							return getPossibleMoves()[i];
 						}
 					}
 				}
 				if (space + highestNeg(getPossibleMoves()) > 5) {
-					System.out.println(highestNeg(getPossibleMoves()) + " 15");
+					//System.out.println(highestNeg(getPossibleMoves()) + " 15");
 					return highestNeg(getPossibleMoves());
 				} else if (space > Math.abs(lowestNeg(getPossibleMoves())) + 5) {
-					System.out.println(lowestNeg(getPossibleMoves()) + " 16");
+					//System.out.println(lowestNeg(getPossibleMoves()) + " 16");
 					return lowestNeg(getPossibleMoves());
 				} else {
-					System.out.println(getPossibleMoves()[getPossibleMoves().length - 2] + " 17");
+					//System.out.println(getPossibleMoves()[getPossibleMoves().length - 2] + " 17");
 					return getPossibleMoves()[getPossibleMoves().length - 2];
 				}
 			} else {
-				System.out.println(highestNeg(getPossibleMoves()) + " 18");
+				//System.out.println(highestNeg(getPossibleMoves()) + " 18");
 				return highestNeg(getPossibleMoves());
 			}
 		}

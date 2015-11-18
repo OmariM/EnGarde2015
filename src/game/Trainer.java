@@ -4,7 +4,6 @@ import players.*;
 
 import java.util.ArrayList;
 
-
 /*
  * What it does:
  * runs a tounament with our bot and other bots randomly deviated from them our bot
@@ -14,40 +13,42 @@ import java.util.ArrayList;
  */
 
 public class Trainer {
-	
+
 	static double balls;
 
 	public Trainer(int balls) {
-		
-		
+
 	}
 
 	public static void main(String[] args) {
-		while(true == true){
-			train(0.05);
+		int iterations = 0;
+		train(iterations);
+
+	}
+
+	public static void train(int iterations) {
+		while (true) {
+			double oldBalls = balls;
+			Tournament t = new Tournament(); 							// create the tournament
+			t.addPlayer(new BlankSpace("father", balls));			    // add the father with best balls
+			for (int i = 0; i < 10; i++) {								// creates the players with random balls
+				balls = oldBalls + randomNum();
+				t.addPlayer(new BlankSpace("variant " + i + " Balls: " + balls, balls));
+			}
+			ArrayList<Player> players = t.playTournament(1000, false);     // play the tournament
+			Player winner = players.get(players.size() - 1);            // get the winner
+			balls = ((BlankSpace) winner).getBalls(); 					// set the balls of the winner to father's balls
+			iterations++;
+			System.out.println("=======================================================================");
+			System.out.println("Winner's Balls: " + balls	+ " || Number of iterations: " + iterations);
+			System.out.println("=======================================================================");
 		}
 	}
 	
-	public static void train(double balls){
-		int iterations = 0;
-		Tournament t = new Tournament(); 								   //create the tournament
-		t.addPlayer(new blank_space("father", balls)); 					   //add the father with best balls
-		t.addPlayer(new blank_space("v1", balls + 1+(-2)*(Math.random()))); //add the variants
-		t.addPlayer(new blank_space("v2", balls + 1+(-2)*(Math.random()))); //add the variants
-		t.addPlayer(new blank_space("v3", balls + 1+(-2)*(Math.random()))); //add the variants
-		t.addPlayer(new blank_space("v4", balls + 1+(-2)*(Math.random()))); //add the variants
-		t.addPlayer(new blank_space("v5", balls + 1+(-2)*(Math.random()))); //add the variants
-		t.addPlayer(new blank_space("v6", balls + 1+(-2)*(Math.random()))); //add the variants
-		t.addPlayer(new blank_space("v7", balls + 1+(-2)*(Math.random()))); //add the variants
-		t.addPlayer(new blank_space("v8", balls + 1+(-2)*(Math.random()))); //add the variants
-		ArrayList<Player> players = t.playTournament(10000, false);        //play the tournament
-		Player winner = players.get(players.size()-1);					   //get the winner
-		double winnerBalls = ((blank_space)winner).getBalls();			   //get the balls of the winner
-		iterations++;
-		System.out.println("Winner Balls: " + winnerBalls + " || Number of iterations: " + iterations);
-		balls = winnerBalls;											   //set the new balls to best balls
-		train(balls);
-		
+	public static double randomNum(){
+		double randNum = Math.random();
+		if(Math.random() > .5) randNum = randNum*(-1);
+		return randNum;
 	}
 
 }

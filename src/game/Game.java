@@ -18,7 +18,7 @@ public class Game {
 
 	public static void main(String[] args) {
 		// Replace these players with your players to test.
-		Player player1 = new blank_space("Your ex",.05);
+		Player player1 = new BlankSpace("Your ex",.05);
 		Player player0 = new AggressivePlayer("Bot");
 		Game g = new Game(player0, player1, true, true);
 		g.play();
